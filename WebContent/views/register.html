@@ -1,0 +1,65 @@
+ <img src="resources/images/fondo-login.jpg" class="full-screen-background-image"/>
+ <div class="container">
+    <h1 class="col-lg-8 well">Registrarte</h1>
+    <div class="col-lg-8 well">
+    	<div class="row">
+          <form id="registerForm" ng-submit="register()">
+              <div class="col-sm-12">
+	              <div class="row">
+	                  <div class="col-sm-6 form-group">
+	                      <label>Username</label>
+	                      <input type="text" id="username" ng-model="userRegister.userCredentials.username" name="username" required placeholder="Username.." class="form-control">
+	                  </div>
+	                  <div class="col-sm-6 form-group">
+	                      <label>Contraseña</label>
+	                      <input type="password" id="password" ng-model="userRegister.userCredentials.password" name="password" required placeholder="Contraseña.." class="form-control">
+	                  </div>
+	              </div>
+                  <div class="row">
+                      <div class="col-sm-6 form-group">
+                          <label>Nombre</label>
+                          <input type="text" id="name" ng-model="userRegister.name" name="name" required placeholder="Nombre.." class="form-control">
+                      </div>
+                      <div class="col-sm-6 form-group">
+                          <label>Apellidos</label>
+                          <input type="text" id="surnames" ng-model="userRegister.surnames" name="surnames" required placeholder="Apellidos.." class="form-control">
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-6 form-group">
+                          <label>Ciudad</label>
+                          <input type="text" id="city" ng-model="userRegister.city" name="city" required placeholder="Localidad.." class="form-control">
+                      </div>
+                      <div class="col-sm-6 form-group">
+                          <label>Dirección</label>
+                          <input type="text" id="address" ng-model="userRegister.address" name="address" placeholder="Dirección.." class="form-control">
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-6 form-group">
+                          <label>Fecha de nacimiento </label>
+                          <input type="date" id="birthDate" ng-model="userRegister.birthDate" required name="birthDate" required class="form-control">
+                      </div>
+                      <div class="col-sm-6 form-group">
+                          <label>Número de teléfono</label>
+                          <input type="number" id="phone" ng-model="userRegister.phone" name="phone" required placeholder="Teléfono.." class="form-control">
+                      </div>
+                  </div>
+              <div class="row">
+                  <div class="col-sm-6 form-group">
+                      <label>Email</label>
+                      <input type="email" id="email" ng-model="userRegister.email" name="email" required placeholder="Email.." class="form-control">
+                  </div>
+              </div>
+			  <a href="#/login"><button class="btn btn-lg btn-info">Volver a Login</button></a>
+              <input type="submit" value="Registrar" class="btn btn-lg btn-info pull-right">
+              </div>
+              <div class="row">
+              	<div ng-if="registerErrors != null" class="col-sm-6 form-group">
+              		<span style="color:red; margin-left: 10px;" id="errorMsg" ng-bind="registerErrors"></span>
+              	</div>
+              </div>
+          </form>
+        </div>
+    </div>
+</div>

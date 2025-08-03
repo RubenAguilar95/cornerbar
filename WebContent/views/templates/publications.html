@@ -1,0 +1,3 @@
+﻿<div id="divPublications" infinite-scroll="pubCtrl.showMorePubs()" infinite-scroll-distance="1" infinite-scroll-immediate-check="false" infinite-scroll-disabled="pubCtrl.endScroll(pubCtrl.publications.length)" style="margin-top: 4%;">
+	<simple-publication id="pub{{$index}}" indice="{{$index}}" ng-repeat="publication in pubCtrl.publications | orderBy: '-publishDate' | limitTo: pubCtrl.pubsToShow" publication="publication"></simple-publication>
+</div>

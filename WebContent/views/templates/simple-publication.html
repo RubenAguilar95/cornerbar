@@ -1,0 +1,88 @@
+﻿<div class="panel panel-info" style="width: 55%;">
+	<div class="panel-heading">
+		<img ng-src="{{sPubCtrl.profileImg}}" width="48" height="45" class="img-circle pull-left" />
+
+		<div class="dropdown pull-right">
+			<button class="dropdown-toggle"
+				style="background: none; border: none;" type="button" id="menu1"
+				data-toggle="dropdown">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+				<li role="presentation"><a role="menuitem" tabindex="-1"
+					href="#"><span class="glyphicon glyphicon-eye-close"></span>
+						Ocultar publicación</a></li>
+				<li ng-if="sPubCtrl.publication.sharer != null" role="presentation"><a role="menuitem" tabindex="-1"
+					ng-click="sPubCtrl.follow()" ng-hide="sPubCtrl.publication.sharer.id == sPubCtrl.globalUser.id"> <span ng-bind="sPubCtrl.publication.sharer | followState: sPubCtrl.globalUser.contacts"></span>
+				</a></li>
+				<li ng-if="sPubCtrl.publication.sharer == null" role="presentation"><a role="menuitem" tabindex="-1"
+					ng-click="sPubCtrl.follow()" ng-hide="sPubCtrl.publication.owner.id == sPubCtrl.globalUser.id"> <span ng-bind="sPubCtrl.publication.owner | followState: sPubCtrl.globalUser.contacts"></span>
+				</a></li>
+				<li role="presentation" class="divider"></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1"
+					href="#"><span class="glyphicon glyphicon-ban-circle"></span>
+						Bloquear</a></li>
+			</ul>
+		</div>
+
+		<div ng-if="sPubCtrl.publication.sharer != null">
+			<h4>
+				<span>&nbsp;&nbsp;</span> <a href="#/profile/{{sPubCtrl.publication.sharer.userCredentials.username}}" id="nombrePublicador">{{sPubCtrl.publication.sharer.name}}
+					{{sPubCtrl.publication.sharer.surname1}}</a> <span id="accion"> <small>
+						ha compartido la publicación de <a href="#/profile/{{sPubCtrl.publication.owner.userCredentials.username}}"
+						 id="publicOrigen">{{sPubCtrl.publication.owner.name}}
+							{{sPubCtrl.publication.owner.surname1}}</a>
+				</small>
+				</span>
+			</h4>
+			<span style="float:right; font-size: 0.8em; margin-top: -8px;">{{sPubCtrl.publication.publishDate | date : "dd MMM yyyy 'a las' HH:mm"}}</span>
+		</div>
+		<div ng-if="sPubCtrl.publication.sharer == null">
+			<h4>
+				<span>&nbsp;&nbsp;</span> <a href="#/profile/{{sPubCtrl.publication.owner.userCredentials.username}}" id="nombrePublicador">{{sPubCtrl.publication.owner.name}}
+					{{sPubCtrl.publication.owner.surname1}}</a> <span id="accion"> <small>
+						ha realizado una publicación
+				</small>
+				</span>
+			</h4>
+			<span style="float:right; font-size: 0.8em; margin-top: -8px;">{{sPubCtrl.publication.publishDate | date : "dd MMM yyyy 'a las' HH:mm"}}</span>
+		</div>
+
+	</div>
+	<div class="panel-body">
+		<p ng-bind-html="sPubCtrl.publication.content.text"></p>
+		<div ng-if="sPubCtrl.publication.content.type=='IMG'" id="mediaContent">
+			<img ng-src="{{sPubCtrl.publication.content.image}}" class="img-rectangle" />
+		</div>
+		<hr>
+		<form style="position: relative;">
+			<div class="likes" ng-show="sPubCtrl.showLikes && sPubCtrl.publication.likes.length > 0" ng-mouseover="sPubCtrl.seeLikes(1)" ng-mouseleave="sPubCtrl.dontSeeLikes()">
+						<span ng-repeat="userLike in sPubCtrl.publication.likes | limitTo: 9">{{userLike.name}} {{userLike.surname1}}<br/></span>
+						<span ng-show="sPubCtrl.publication.likes.length > 9" style="float:right; margin-right:15%; text-align: right;"><i>Y {{sPubCtrl.publication.likes.length -9}} m&aacute;s..</i></span>
+					</div>
+			<div class="input-group">
+				<div class="input-group-btn" style="vertical-align:top !important; ">
+					<button ng-click="sPubCtrl.like()" class="btn btn-default" title="Me gusta" style="position:relative;"
+						ng-mouseover="sPubCtrl.seeLikes()" ng-mouseleave="sPubCtrl.dontSeeLikes()">
+						<span class="glyphicon glyphicon-thumbs-up"></span>
+						<span style="position: absolute; z-index:100; vertical-align:top; float:right;
+ 							 background-color: blue; margin-top: -7px;" class="badge"
+							 ng-show="sPubCtrl.publication.likes != null && sPubCtrl.publication.likes.length > 0" 
+							 ng-bind="sPubCtrl.publication.likes.length"></span>
+					</button>
+					<button class="btn btn-default" title="Compartir" ng-click="sPubCtrl.sharePub()">
+						<i class="glyphicon glyphicon-share"></i>
+					</button>
+				</div>
+				<textarea ng-model="sPubCtrl.newComment" rows="1" style="overflow:hidden;" auto-resize class="form-control"
+					send-on-enter="sPubCtrl.comment()" placeholder="Escribe un comentario.."></textarea>
+			</div>
+		</form>
+		<hr>
+		<div id="comments" ng-show="sPubCtrl.publication.comments != null && sPubCtrl.publication.comments.length > 0">
+			<h4>Comentarios</h4>
+			<hr>
+			<simple-comment ng-repeat="comment in sPubCtrl.publication.comments | orderBy: '-commentDate'" comment="comment" pubid="{{sPubCtrl.publication.id}}"></simple-comment>
+		</div>
+	</div>
+</div>

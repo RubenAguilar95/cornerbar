@@ -1,0 +1,14 @@
+﻿<div ng-hide="sCommCtrl.deleted" style="background-color: #F7FFFF; margin-bottom:1%;">
+	<img ng-src="{{sCommCtrl.profileImg}}" width="40" height="40" class="img-square"
+		style="padding: 5px; display: inline;" />
+	<h5 style="display: inline;">
+		&nbsp;<a href="#/profile/{{sCommCtrl.comment.owner.userCredentials.username}}">{{sCommCtrl.comment.owner.name}} {{sCommCtrl.comment.owner.surname1}}</a><small> dice:</small>
+		<span style="float:right; font-size: 0.8em; margin-top: 3%; margin-right: 5px;">{{sCommCtrl.comment.commentDate | date : "dd MMM yyyy 'a las' HH:mm"}}</span>
+	</h5>
+	<p ng-bind-html="sCommCtrl.comment.text"
+		style="margin-left: 50px; margin-top: -10px; font-family: Verdana; font-size: 11px;">
+	</p><br />
+	<span ng-show="sCommCtrl.globalUser.userCredentials.username == sCommCtrl.comment.owner.userCredentials.username"
+		  ng-click="sCommCtrl.deleteComment()"
+			style="vertical-align: bottom; margin-top:-8%; margin-right:3%; color: blue; font-size: 0.9em; float: right;"><u>Eliminar</u></span>
+</div>

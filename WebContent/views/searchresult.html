@@ -1,0 +1,12 @@
+<div ng-repeat="user in allUsers | limitTo: 5">
+		<div class="media" style="border: 1px solid; padding: 3px; margin-bottom:3px;">
+		  <div class="media-left media-top">
+		    <img ng-src="{{$parent.profileImgFn(user.nameProfileImage)}}" width="60" height="45" class="media-object">
+		  </div>
+		  <div class="media-body">
+		    <a href="#/profile/{{user.userCredentials.username}}"><span class="media-heading enlace h3" ng-bind="user.name + ' ' + user.surname1 + ' ' + user.surname2"></span></a>
+		    <br/>
+		    <span>Ciudad: <span ng-bind="user.city"></span></span> <span style="float:right;"><span ng-bind="user.age"></span> años</span>
+		  </div>
+		</div>
+	</div>

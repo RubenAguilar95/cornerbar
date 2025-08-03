@@ -1,0 +1,141 @@
+﻿<div style="float:left; margin-left: -10%; width: 20%; position: fixed;">
+	<img alt="Profile imagen" ng-src="{{profileImg}}" width="320" height="240"/>
+	<span class="enlace" ng-show="globalUser.nameProfileImage == null" data-toggle="modal" data-target="#pickImageModal">Añade una foto de perfil!</span>
+	<h2 ng-bind="globalUser.name + ' ' + globalUser.surname1 + ' ' + globalUser.surname2"></h2>
+	<div id="data">
+	<span>Ciudad de residencia: <span class="cursiva" ng-bind="globalUser.city"></span></span> <br />
+	<span>Edad: <span class="cursiva" ng-bind="globalUser.age"></span></span><br />
+	<span>Email: <span class="cursiva" ng-bind="globalUser.email"></span></span>
+	</div>
+</div>
+
+<div style="margin-left: 25%">
+	<div id="newPublication" style="width: 55%; margin-bottom: 8%;">
+		<textarea id="txtPublication" ng-model="newPublication.content.text" rows="4" cols="68"
+			placeholder="Escribe tu publicacion.." style="width: 100%;"></textarea>
+		<br />
+		<input type="button" value="Publicar" ng-click="publish()" class="btn btn-primary" style="float:right;"/>
+	</div>
+	
+	<div ng-if="publications == null || publications.length == 0">
+		<h3>No has realizado ninguna publicación!</h3>
+	</div>
+	<publications publications="publications" ng-if="publications != null && publications.length > 0"></publications>
+</div>
+
+
+<div style="top:10%; right:12%; float:right; width: 20%; position: fixed;">
+	<h3 style="text-align: right;"><u>GENTE</u></h3>
+	<div ng-repeat="user in allUsers | limitTo: 5">
+		<div class="media" style="border: 1px solid; padding: 3px; margin-bottom:3px;">
+		  <div class="media-left media-top">
+		    <img ng-src="{{$parent.profileImgFn(user.nameProfileImage)}}" width="60" height="45" class="media-object">
+		  </div>
+		  <div class="media-body">
+		    <a href="#/profile/{{user.userCredentials.username}}"><span class="media-heading enlace h3" ng-bind="user.name + ' ' + user.surname1 + ' ' + user.surname2"></span></a>
+		    <br/>
+		    <span>Ciudad: <span ng-bind="user.city"></span></span> <span style="float:right;"><span ng-bind="user.age"></span> años</span>
+		  </div>
+		</div>
+	</div>
+	<span class="enlace" style="float:right;" data-toggle="modal" data-target="#allUsersModal">Ver todo</span>
+	<br/>
+	<h3 style="text-align: right;"><u>CONTACTOS</u></h3>
+	<div ng-repeat="contact in globalUser.contacts | limitTo: 3">
+		<div class="media" style="border: 1px solid; padding: 3px; margin-bottom:3px;">
+		  <div class="media-left media-top">
+		    <img ng-src="{{$parent.profileImgFn(contact.contact.nameProfileImage)}}" width="60" height="45" class="media-object">
+		  </div>
+		  <div class="media-body">
+		    <a href="#/profile/{{contact.contact.userCredentials.username}}"><span class="media-heading enlace h3" ng-bind="contact.contact.name + ' ' + contact.contact.surname1 + ' ' + contact.contact.surname2"></span></a>
+		    <br/>
+		    <span>Ciudad: <span ng-bind="contact.contact.city"></span></span> <span style="float:right;"><span ng-bind="contact.contact.age"></span> años</span>
+		  </div>
+		</div>
+	</div>
+	<span ng-show="globalUser.contacts != null && globalUser.contacts.length > 0" class="enlace" style="float:right;" data-toggle="modal" data-target="#allContactsModal">Ver todo</span>
+</div>
+
+<!-- Modals --> 
+
+<!-- Modal pick image -->
+  <div class="modal fade" id="pickImageModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Foto de perfil</h4>
+        </div>
+        <div class="modal-body">
+          <span>Seleccione un fichero para subir:</span>
+          <input type="file" file="file""/>
+          <img ng-src="{{pickedPhoto}}"/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="upload()">Aceptar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--  Modal All Contacts -->
+  <div class="modal fade" id="allContactsModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Tus contactos</h4>
+        </div>
+        <div class="modal-body">
+        <div ng-repeat="contact in globalUser.contacts">
+			<div class="media" style="border: 1px solid; padding: 3px; margin-bottom:3px;">
+		  	<div class="media-left media-top">
+		   		 <img ng-src="{{$parent.profileImgFn(contact.contact.nameProfileImage)}}" width="60" height="45" class="media-object">
+		 	 </div>
+		 	 <div class="media-body">
+		  	  <span class="media-heading enlace h3" ng-click="closeWithLinkContactModal('profile/' + contact.contact.userCredentials.username)" ng-bind="contact.contact.name + ' ' + contact.contact.surname1 + ' ' + contact.contact.surname2"></span>
+		   		 <br/>
+		   	 <span>Ciudad: <span ng-bind="contact.contact.city"></span></span> <span style="float:right;"><span ng-bind="contact.contact.age"></span> años</span>
+		  </div>
+		</div>
+	</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--  Modal All Users -->
+  <div class="modal fade" id="allUsersModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Usuarios</h4>
+        </div>
+        <div class="modal-body">
+        	<div ng-repeat="user in allUsers">
+				<div class="media" style="border: 1px solid; padding: 3px; margin-bottom:3px;">
+				  <div class="media-left media-top">
+				    <img ng-src="{{$parent.profileImgFn(user.nameProfileImage)}}" width="60" height="45" class="media-object">
+				  </div>
+				  <div class="media-body">
+				    <span class="media-heading enlace h3" ng-click="closeWithLinkUsersModal('profile/' +user.userCredentials.username)" ng-bind="user.name + ' ' + user.surname1 + ' ' + user.surname2"></span>
+				    <br/>
+				    <span>Ciudad: <span ng-bind="user.city"></span></span> <span style="float:right;"><span ng-bind="user.age"></span> años</span>
+				  </div>
+				</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>

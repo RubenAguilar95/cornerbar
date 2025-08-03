@@ -1,0 +1,6 @@
+<div ng-if="userImage != null && userImage !=''">
+	<img alt="Imagen de Perfil" ng-src="https://s3.amazonaws.com/cornerbarproyectodam/{{userImage}}" width="{{width}}" height="{{heigth}}">
+</div>
+<div ng-if="userImage == null || userImage ==''">
+	<img alt="Imagen de Perfil" ng-src="resources/images/no-photo-perfil.jpg" width="{{width}}" height="{{heigth}}">
+</div>

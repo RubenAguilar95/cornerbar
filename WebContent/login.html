@@ -1,0 +1,48 @@
+<!-- <div id="myCarousel" class="carousel slide" data-ride="carousel"> -->
+<!--   <!-- Indicators --> 
+<!--   <ol class="carousel-indicators"> -->
+<!--     <li data-target="#myCarousel" data-slide-to="0" class="active"></li> -->
+<!--     <li data-target="#myCarousel" data-slide-to="1"></li> -->
+<!--     <li data-target="#myCarousel" data-slide-to="2"></li> -->
+<!--   </ol> -->
+
+<!--   <!-- Wrapper for slides --> 
+<!--   <div class="carousel-inner" role="listbox"> -->
+<!--     <div class="item active"> -->
+<!--       <img src="resources/images/loginbackground1.jpg"> -->
+<!--     </div> -->
+
+<!--     <div class="item"> -->
+<!--       <img src="resources/images/loginbackground2.jpg"> -->
+<!--     </div> -->
+
+<!--     <div class="item"> -->
+<!--       <img src="resources/images/loginbackground3.jpg"> -->
+<!--     </div> -->
+<!--   </div> -->
+
+<!-- </div> -->
+
+<img src="resources/images/fondo-login.jpg" class="full-screen-background-image"/>
+	<div class="container pos">
+		<div class="row col-xs-3 col-xs-offset-6">
+	      <form class="form-signin" ng-submit="login()">
+	        <h2 class="form-signin-heading">Cornerbar</h2>
+	        <br>
+	<!--         <label for="inputEmail" class="label-control">Correo electrÃ³nico</label> -->
+	        <input type="text" id="username" ng-model="username" class="form-control" placeholder="Usuario.." required autofocus>
+	<!--         <label for="inputPassword" class="label-control">Contraseña</label> -->
+	        <input type="password" id="password" ng-model="password" class="form-control" placeholder="Contraseña.." required>
+	        <div class="checkbox">
+	          <label>	
+	            <input id="checkRememberMe" type="checkbox" ng-model="rememberMe"> Recordar
+	          </label>
+	        </div>
+	        <span style="color:red;" ng-show="loginError" id="error">Las credenciales no coinciden</span>
+	        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+	      </form>
+	      <a href="#/register">
+	     	 <button class="btn btn-block">Regístrate</button>
+	      </a>
+		</div>
+    </div>

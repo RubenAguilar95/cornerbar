@@ -1,0 +1,65 @@
+﻿<div style="float:left; margin-left: -10%; width: 20%; position: fixed;">
+	<img alt="Imagen de Perfil" ng-src="{{profileImg}}" width="320" height="240">
+	<h2 ng-bind="profileUser.name + ' ' + profileUser.surname1 + ' ' + profileUser.surname2"></h2>
+	<div id="data">
+	<span>Ciudad de residencia: <span class="cursiva" ng-bind="profileUser.city"></span></span> <br />
+	<span>Edad: <span class="cursiva" ng-bind="profileUser.age"></span></span> <br />
+	<span>Email: <span class="cursiva" ng-bind="profileUser.email"></span></span>
+	</div>
+	<button ng-hide="profileUser.id == globalUser.id" style="float:right;" ng-click="follow()">{{ profileUser | followState:globalUser.contacts }}</button>
+</div>
+
+<div style="top:15%; right:12%; float:right; width: 20%; position: fixed;">
+<h3 style="text-align: right;"><u>SIGUE A..</u></h3>
+	<div ng-repeat="contact in profileUser.contacts | limitTo: 7">
+		<div class="media" style="border: 1px solid; padding: 3px; margin-bottom:3px;">
+		  <div class="media-left media-top">
+		    <img ng-src="{{$parent.profileImgFn(contact.contact.nameProfileImage)}}" width="60" height="45" class="media-object">
+		  </div>
+		  <div class="media-body">
+		    <a href="#/profile/{{contact.contact.userCredentials.username}}"><span class="media-heading enlace h3" ng-bind="contact.contact.name + ' ' + contact.contact.surname1 + ' ' + contact.contact.surname2"></span></a>
+		    <br/>
+		    <span>Ciudad: <span ng-bind="contact.contact.city"></span></span> <span style="float:right;"><span ng-bind="contact.contact.age"></span> años</span>
+		  </div>
+		</div>
+	</div>
+	<span ng-show="profileUser.contacts != null && profileUser.contacts.length > 0" class="enlace" style="float:right;" data-toggle="modal" data-target="#profileContactsModal">Ver todo</span>
+</div>
+
+<div style="margin-left: 25%">
+	<div ng-if="publications == null || publications.length <= 0" style="padding-left:35%; margin-top:10%">
+		<h3>Este usuario no tiene ninguna publicación</h3>
+	</div>
+	<publications publications="publications" ng-if="publications != null && publications.length > 0"></publications>
+</div>
+
+
+<!--  Modal Profile Contacts -->
+  <div class="modal fade" id="profileContactsModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contactos de {{profileUser.name}} {{profileUser.surname1}}</h4>
+        </div>
+        <div class="modal-body">
+        <div ng-repeat="contact in profileUser.contacts">
+			<div class="media" style="border: 1px solid; padding: 3px; margin-bottom:3px;">
+		  	<div class="media-left media-top">
+		   		 <img ng-src="{{$parent.profileImgFn(contact.contact.nameProfileImage)}}" width="60" height="45" class="media-object">
+		 	 </div>
+		 	 <div class="media-body">
+		  	  <span class="media-heading enlace h3" ng-click="closeWithLinkContactModal('profile/' + contact.contact.userCredentials.username)" ng-bind="contact.contact.name + ' ' + contact.contact.surname1 + ' ' + contact.contact.surname2"></span>
+		   		 <br/>
+		   	 <span>Ciudad: <span ng-bind="contact.contact.city"></span></span> <span style="float:right;"><span ng-bind="contact.contact.age"></span> años</span>
+		  </div>
+		</div>
+	</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
